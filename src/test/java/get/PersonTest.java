@@ -21,7 +21,7 @@ public class PersonTest {
       = new PactProviderRuleMk2("person", "localhost", 8000, this);
 
   @Pact(provider="person", consumer="person_consumer")
-  public RequestResponsePact configurationFragment(PactDslWithProvider builder) {
+  public RequestResponsePact createResponsePact(PactDslWithProvider builder) {
     return builder
         .given("a person exists")
         .uponReceiving("a request for a specific")
@@ -35,7 +35,7 @@ public class PersonTest {
 
   @PactVerification("person")
   @Test
-  public void get_mil() throws IOException {
+  public void get_person() throws IOException {
     PersonService psc = new PersonService();
     Person response = psc.findPerson("http://localhost:8000", 1);
     assertThat(response.getName(), is("Jack"));

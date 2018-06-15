@@ -32,7 +32,7 @@ public class PostTest {
     return builder
         .given("testing a POST")
         .uponReceiving("POST REQUEST")
-        .path("/pact")
+        .path("/pact/9")
         .method("POST")
         .willRespondWith()
         .status(200)
@@ -43,7 +43,7 @@ public class PostTest {
   @Test
   @PactVerification("post_test")
   public void post_method_test() throws IOException {
-    URL myURL = new URL("http://localhost:8080/pact");
+    URL myURL = new URL("http://localhost:8080/pact/9");
     HttpURLConnection connection = (HttpURLConnection) myURL.openConnection();
     connection.setRequestMethod("POST");
     connection.setDoOutput(true);
@@ -54,9 +54,15 @@ public class PostTest {
     while ((line = reader.readLine()) != null) {
       results.append(line);
     }
-
     connection.disconnect();
+
+    //we can assert the return value to pass or fail the test
+    assertThat(results.toString(), is("{\"name\":\"Alexander\"}"));
     System.out.println("Results from test -----> " + results.toString());
   }
+
+
+
+
 
 }

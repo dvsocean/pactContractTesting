@@ -21,7 +21,7 @@ public PactProviderRuleMk2 mockProvider
     = new PactProviderRuleMk2("burner", "localhost", 8000, this);
 
   @Pact(provider="burner", consumer="military_consumer")
-  public RequestResponsePact configurationFragment(PactDslWithProvider builder) {
+  public RequestResponsePact genResponseData(PactDslWithProvider builder) {
     return builder
         .given("hardware exists")
         .uponReceiving("request for a specific hardware")
@@ -35,7 +35,7 @@ public PactProviderRuleMk2 mockProvider
 
   @PactVerification("burner")
   @Test
-  public void get_person() throws IOException {
+  public void get_burner() throws IOException {
     BurnerService bs = new BurnerService();
     Burner resp = bs.findBurner("http://localhost:8000", 1);
     assertThat(resp.getModel(), is("1911 45. ACP"));
